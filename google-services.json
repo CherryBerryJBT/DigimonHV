@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "230433277111",
+    "project_id": "jbtdevelopementprojectsum200",
+    "storage_bucket": "jbtdevelopementprojectsum200.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230433277111:android:56db98a6f363e7875b7932",
+        "android_client_info": {
+          "package_name": "com.CherryBerryJBT.DigimonUniversityWestProject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230433277111-fnj2ueltmf0o912nae3doshuoojt98d8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU-GVR7mqpgwpyAL9-V7x2hypAoAmFpXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230433277111-fnj2ueltmf0o912nae3doshuoojt98d8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
