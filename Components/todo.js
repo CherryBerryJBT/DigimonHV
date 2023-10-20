@@ -77,7 +77,7 @@ const ToDo = () => {
           value={task}
           onChangeText={text => setTask(text)}
         />
-        <Button title="do" onPress={addTask} color="#841584" />
+        <Button title="do" onPress={addTask} color="#663399" />
       </View>
       <FlatList
         data={taskList}

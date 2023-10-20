@@ -3,14 +3,31 @@ import { View, Text, Button, FlatList, TouchableOpacity, StyleSheet } from 'reac
 import { styles } from '../Style/Stylesheet';
 import { useItems } from '../Workspace/ItemsContext';
 import { v4 as uuidv4 } from 'uuid';
+import { collection, getDocs, db } from "../Login/firebase";
+
 
 const Shop = () => {
     const { items, setItems } = useItems();
-    const shopItems = [
-        { id: '4', name: 'Digi-Potion' },
-        { id: '5', name: 'Digi-Armor' },
-        { id: '6', name: 'Digi-Sword' },
-    ];
+    const [shopItems, setShopItems] = useState([
+        { id: '4', name: 'Digi-Potion' }, 
+    ]);
+
+    useEffect(() => {
+        // Fetch items from Firestore
+        const fetchItems = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "DigiShopItems")); // "shopItems" is your collection in Firestore
+                const fetchedItems = querySnapshot.docs.map(doc => {
+                    return { id: doc.id, ...doc.data() }; // doc.data() is the actual item data
+                });
+                setShopItems(fetchedItems);
+            } catch (error) {
+                console.error("Error fetching shop items: ", error);
+            }
+        };
+
+        fetchItems();
+    }, []);
 
     const buyItem = (item) => {
         const itemExists = items.some(i => i.id === item.id);

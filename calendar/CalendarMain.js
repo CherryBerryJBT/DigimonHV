@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#841584', 
+    color: '#663399', 
   },
 });
 

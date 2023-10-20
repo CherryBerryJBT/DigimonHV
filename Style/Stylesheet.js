@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#841584',
+    color: '#663399',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   input: {
     width: '70%',
-    borderColor: '#841584',
+    borderColor: '#663399',
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
     backgroundColor: '#fff',
-    borderColor: '#841584',
+    borderColor: '#663399',
     borderWidth: 1,
     borderRadius: 10,
     flexDirection: 'row',
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
   },
   task: {
     maxWidth: '80%',
-    color: '#841584',
+    color: '#663399',
   },
   deleteButton: {
     backgroundColor: '#ff6347',
