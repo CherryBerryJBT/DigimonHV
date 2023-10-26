@@ -1,61 +1,51 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { styles } from '../Style/Stylesheet';
+import { getStorage, ref, listAll, getDownloadURL, deleteObject } from "firebase/storage";
 
-const Photos = forwardRef((props, ref) => {
+const Photos = () => {
   const [photos, setPhotos] = useState([]);
-  useImperativeHandle(ref, () => ({
-    addPhoto,
-  }));
 
   useEffect(() => {
-    const loadPhotos = async () => {
-      try {
-        const storedPhotos = await AsyncStorage.getItem('photos');
-        if (storedPhotos) {
-            console.log('Loaded photos:', storedPhotos);
-          setPhotos(JSON.parse(storedPhotos));
-        }
-      } catch (error) {
-        console.error('Failed to load photos.', error);
-      }
-    };
-
-    loadPhotos();
+    fetchImages();
   }, []);
 
-  const savePhotos = async (newPhotos) => {
+  const fetchImages = async () => {
     try {
-      await AsyncStorage.setItem('photos', JSON.stringify(newPhotos));
-      console.log('Photos saved:', newPhotos);
+      const imageRefs = [];
+      const storage = getStorage();
+      const imagesFolderRef = ref(storage, 'gs://jbtdevelopementprojectsum200.appspot.com'); 
+
+      const imageFolderContents = await listAll(imagesFolderRef);
+
+      for (const itemRef of imageFolderContents.items) {
+        const downloadUrl = await getDownloadURL(itemRef);
+        imageRefs.push({ uri: downloadUrl, id: itemRef.name }); 
+      }
+
+      setPhotos(imageRefs);
     } catch (error) {
-        console.error('Failed to save photos.', error);
+      console.error("Error fetching images: ", error);
     }
   };
 
-  const addPhoto = (photoUri) => {
-    const newPhotos = [...photos, { id: Math.random().toString(), uri: photoUri }];
-    savePhotos(newPhotos);
-    setPhotos(newPhotos);
-  };
+  const handleDelete = async (imageId) => {
+    try {
+      const storage = getStorage();
+      const imageRef = ref(storage, `gs://jbtdevelopementprojectsum200.appspot.com/${imageId}`);
 
-  const deletePhoto = (photoId) => {
-    const newPhotos = photos.filter(photo => photo.id !== photoId);
-    console.log('Adding to state:', newPhotos);
-    savePhotos(newPhotos);
-    setPhotos(newPhotos);
-  };
+      await deleteObject(imageRef);
 
-  // Expose the addPhoto method to parent components
-  React.useImperativeHandle(ref, () => ({
-    addPhoto,
-  }));
+      fetchImages();
+    } catch (error) {
+      console.error("Error deleting image: ", error);
+    }
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.listItem}>
       <Image source={{ uri: item.uri }} style={styles.image} />
-      <TouchableOpacity onPress={() => deletePhoto(item.id)} style={styles.deleteButton}>
+      <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
         <Text style={styles.deleteButtonText}>X</Text>
       </TouchableOpacity>
     </View>
@@ -72,6 +62,6 @@ const Photos = forwardRef((props, ref) => {
       />
     </View>
   );
-});
+};
 
 export default Photos;

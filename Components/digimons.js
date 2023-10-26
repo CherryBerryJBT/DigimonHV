@@ -46,9 +46,10 @@ function Digimons() {
         };
         saveCaughtDigimons();
     }, [caughtDigimons]);
-//shuffle Digimons and select Wild to catch just one of them at a time
+//shuffle Digimons and select Wild to catch one at a time
   const selectRandomDigimons = (digimons) => {
-    let availableDigimons = digimons.filter(d => !caughtDigimons.some(cd => cd.name === d.name));
+    let availableDigimons = digimons.filter(d => 
+        !caughtDigimons.some(cd => cd.name === d.name));
     let shuffled = digimons.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, 3);
 };
@@ -59,7 +60,8 @@ const catchDigimon = (digimon) => {
 };
 
 const releaseDigimon = (digimonName) => {
-    setCaughtDigimons(prevState => prevState.filter(d => d.name !== digimonName));
+    setCaughtDigimons(prevState => prevState.filter(d => 
+        d.name !== digimonName));
 };
 
 return (

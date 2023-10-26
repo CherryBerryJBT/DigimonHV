@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, TextInput, Button, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from "@expo/vector-icons";
-import { FIREBASE_AUTH } from "./firebase"; // Assuming the path is correct
+import { FIREBASE_AUTH } from "./firebase";
 import { useNavigation } from "@react-navigation/native";
-import { verifyPermissions, takeImageHandler } from "../Components/cameraUtil"; // Assuming the path is correct
+import { verifyPermissions, takeImageHandler } from "../Components/cameraUtil";
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false);
-    const [profileImage, setProfileImage] = useState(require('../assets/dragonballZ.jpg')); // Placeholder image
+    const [profileImage, setProfileImage] = useState(require('../assets/dragonballZ.jpg'));
     const auth = FIREBASE_AUTH;
     const navigation = useNavigation();
 
@@ -57,7 +57,6 @@ function Profile() {
 
     const handleSaveChanges = () => {
         setIsEditing(false);
-        // Here, you might want to update the playerInfo state to a server or local storage
     };
 
     return (
@@ -93,8 +92,7 @@ function Profile() {
                 
             </View>
             <View style={styles.playerInfo}>
-                {/* The rest of the player's information display/edit goes here */}
-                {/* ... */}
+    
                 <Text style={styles.title}>Name</Text>
             {isEditing ? <TextInput style={styles.input} value={name} onChangeText={setName} /> : <Text style={styles.detail}>{name}</Text>}
             
@@ -132,34 +130,27 @@ function Profile() {
 }
 
 const styles = StyleSheet.create({
-    // ... your existing styles
+
     profileHeader: {
-        // styles for the profile header section
     },
     userName: {
-        // styles for the user's name text
     },
     userEmail: {
-        // styles for the user's email text
     },
     editButton: {
-        // styles for the edit profile button
     },
     playerInfo: {
-        // styles for the player information section
     },
-    // ... other styles you may need
     profileImageSection: {
-        // your styles for the profile image section
     },
     userDetailRow: {
-        flexDirection: 'row', // aligns the label and info in one line
-        alignItems: 'center', // if you want to vertically center them
-        marginVertical: 5, // space between each detail row
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
     },
     userDetailLabel: {
-        fontWeight: 'bold', // makes the label bold
-        marginRight: 10, // space between label and info
+        fontWeight: 'bold',
+        marginRight: 10,
     },
     profileImage: {
         width: 200,
@@ -192,16 +183,13 @@ const styles = StyleSheet.create({
         marginBottom: 20 
     },
     userInfoSection: {
-        // your styles for the user info section
     },
     userNameBold: {
-        fontWeight: 'bold', // making the username text bold
-        // ... other styles
+        fontWeight: 'bold', 
     },
     space: {
-        marginVertical: 15, // space between sections, adjust as needed
+        marginVertical: 15,
     },
-    // ... other styles you may need
 });
 
 

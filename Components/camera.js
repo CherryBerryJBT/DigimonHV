@@ -1,38 +1,58 @@
-import React, { useState, useRef, useEffect } from 'react'; // Import useRef and useEffect
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
-import { verifyPermissions, takeImageHandler } from "../Components/cameraUtil";
-import Photos from './photos';
+import { pickImageHandler, takeNewPhoto } from "../Components/cameraUtil";
 
-
-function Camera(props) {;
+function Camera({ onPhotoTaken }) {
     const [pickedImage, setPickedImage] = useState(null);
-    const photosRef = useRef();
 
     const handleImagePicking = async () => {
-      const imageUri = await takeImageHandler();
-        if (imageUri) {
-            setPickedImage(imageUri);
-            console.log('Adding photo:', imageUri);
-            photosRef.current?.addPhoto(imageUri);
+        try {
+            const imageUri = await pickImageHandler();
+            if (imageUri) {
+                setPickedImage(imageUri);
+                onPhotoTaken(imageUri);
+            }
+        } catch (error) {  
+            console.error('An error occurred while picking the image:', error);
+        
         }
     };
+    
+const handleNewPhoto = async () => {
+    try {
+        console.log("Attempting to take a new photo...");
+        const imageUri = await takeNewPhoto();
+        if (imageUri) {
+            console.log("New photo taken:", imageUri);
+            setPickedImage(imageUri);
+            console.log("onPhotoTaken function type:", typeof onPhotoTaken); 
+            onPhotoTaken(imageUri);
+        }
+    } catch (error) {
+        console.error('An error occurred while taking a new photo:', error);
+    }
+};
 
     return (
         <View style={styles.container}>
-        <View style={styles.screen}>
             <Text style={styles.title}>DigiCam</Text>
-        <View style={styles.imagePicker}>
-            <View style={styles.imagePreview}>
-                {!pickedImage ? (
-                    <Text>save the moment</Text>
-                ) : (
-                    <Image resizeMode="cover" style={styles.image} source={{ uri: pickedImage }} />
-                )}
+            <View style={styles.imagePicker}>
+                <View style={styles.imagePreview}>
+                    {!pickedImage ? (
+                        <Text>save the moment</Text>
+                    ) : (
+                        <Image style={styles.image} source={{ uri: pickedImage }} />
+                    )}
+                </View>
+                <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                        <Button title="Pick Image" color="#ffa500" onPress={handleImagePicking} />
+                    </View>
+                    <View style={styles.button}>
+                        <Button title="Take Photo" color="#4CAF50" onPress={handleNewPhoto} />
+                    </View>
+                </View>
             </View>
-            <Button title="Click" color="#ffa500" onPress={handleImagePicking} />
-        </View>
-        {photosRef.current}
-        </View>
         </View>
     );
 }
@@ -68,7 +88,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center',
         color: '#663399', 
-      },
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '60%',
+    },
+    button: {
+        margin: 10,
+    },
 });
 
 export default Camera;

@@ -1,29 +1,48 @@
+// cameraUtil.js
 import * as ImagePicker from 'expo-image-picker';
 
 export const verifyPermissions = async () => {
-    const result = await ImagePicker.requestCameraPermissionsAsync();
-    if (result.status !== 'granted') {
-        alert('You need to grant camera permissions to use this feature.');
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
         return false;
     }
     return true;
 };
 
-export const takeImageHandler = async () => {
+export const pickImageHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
-        return;
+        return null;
     }
-    const imageResult = await ImagePicker.launchCameraAsync({
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [16, 9],
-        quality: 0.5,
+        aspect: [4, 3],
+        quality: 1,
     });
-    //console.log(imageResult)
 
-    if (!imageResult.canceled) {
-       // console.log(imageResult.assets[0].uri)
-        return imageResult.assets[0].uri;
-
+    if (!result.canceled) {
+        return result.uri;
     }
+    return null;
+};
+
+export const takeNewPhoto = async () => {
+    const hasPermission = await verifyPermissions();
+    if (!hasPermission) {
+        return null;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    if (!result.canceled) {
+        return result.uri;
+    }
+    return null;
 };
