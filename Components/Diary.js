@@ -49,7 +49,7 @@ const Diary = () => {
       const updatedEntries = [...entries, newEntry];
       await AsyncStorage.setItem('storedEntries', JSON.stringify(updatedEntries));
       setEntries(updatedEntries);
-      setInput(''); // Clear the input field after submission
+      setInput('');
     } catch (error) {
       console.error("Failed to add new entry:", error);
     }

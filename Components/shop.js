@@ -15,14 +15,14 @@ const Shop = () => {
     ]);
 
     useEffect(() => {
-        // Fetch items from Firestore
         const fetchItems = async () => {
             try {
-                const querySnapshot = await getDocs(collection(FIRESTORE_DB, "DigiShopItems")); // "DigiShopItems" collection in Firestore
-    
+                const querySnapshot = await getDocs(collection(FIRESTORE_DB, "DigiShopItems"));
                 const fetchedItems = querySnapshot.docs.map(doc => {
+                    console.log(doc.data());
                     return { id: doc.id, ...doc.data() };
                 });
+                console.log(fetchedItems);
                 setShopItems(fetchedItems);
             } catch (error) {
                 console.error("Error fetching shop items: ", error);
@@ -50,9 +50,12 @@ const Shop = () => {
                 keyExtractor={item => item.id}
                 renderItem={({ item }) => (
                     <View style={styles.listItem}>
-                        <Text style={styles.task}>{item.name}</Text>
+
+                        <Text style={[styles.task, { color: 'black' }]}>{item["item.name"]}</Text>
                         <TouchableOpacity 
-                            style={styles.deleteButton} color= "#8fbc8f" onPress={() => buyItem(item)}
+                            style={styles.deleteButton} 
+                            color="#8fbc8f" 
+                            onPress={() => buyItem(item)}
                         >
                             <Text style={styles.deleteButtonText}>Buy</Text>
                         </TouchableOpacity>
@@ -61,7 +64,7 @@ const Shop = () => {
             />
         </View>
     );
-    
+
 };
 
 const additionalStyles = StyleSheet.create({

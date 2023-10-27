@@ -28,13 +28,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'grey',
-    borderRadius: 5, // Optional: for rounded corners
+    borderRadius: 5, // rounded corners
   },
   toggleSelected: {
-    backgroundColor: 'blue', // Or any color representing the selected state
+    backgroundColor: 'blue', 
   },
   toggleUnselected: {
-    backgroundColor: 'white', // Or any color representing the unselected state
+    backgroundColor: 'white', 
   },
   toggleText: {
     color: 'white',

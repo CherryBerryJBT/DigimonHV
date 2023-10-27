@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from "@expo/vector-icons";
 import { FIREBASE_AUTH } from "./firebase";
 import { useNavigation } from "@react-navigation/native";
-import { verifyPermissions, takeImageHandler } from "../Components/cameraUtil";
+import { verifyPermissions, takeNewPhoto, pickImageHandler } from "../Components/cameraUtil";
 
 function Profile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -18,7 +18,7 @@ function Profile() {
     };
     
 
-    // Player's initial information
+    // initial information
     const [name, setName] = useState("Kai Takashi");
     const [age, setAge] = useState("28");
     const [hometown, setHometown] = useState("Digital City");
@@ -47,6 +47,32 @@ function Profile() {
         }
     };
 
+    // Function to handle taking a photo directly
+    const handleTakePhoto = async () => {
+        const hasPermission = await verifyPermissions();
+        if (!hasPermission) {
+            return;
+        }
+        const imageUri = await takeNewPhoto();
+        if (imageUri) {
+            setProfileImage({ uri: imageUri });
+            await AsyncStorage.setItem('profileImageUri', imageUri);
+        }
+    };
+
+    // Function to handle picking an image from the gallery
+    const handlePickImage = async () => {
+        const hasPermission = await verifyPermissions();
+        if (!hasPermission) {
+            return;
+        }
+        const imageUri = await pickImageHandler();
+        if (imageUri) {
+            setProfileImage({ uri: imageUri });
+            await AsyncStorage.setItem('profileImageUri', imageUri);
+        }
+    };
+
     const handleEditUser = () => {
         navigation.navigate("EditUser");
     };
@@ -64,8 +90,17 @@ function Profile() {
         <ScrollView style={styles.container}>
             <View style={styles.profileImageSection}>
                 <Image source={profileImage} style={styles.profileImage} />
-                <Button title="Take Profile Picture" color="#ffa500" onPress={handleProfileImagePicking} />
-           </View> 
+                <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                        <Button title="Take New Photo" color="#ffa500" onPress={handleTakePhoto} />
+                    </View>
+                    {/* Button to pick an image from the gallery */}
+                    <View style={styles.button}>
+                        <Button title="Pick Image from Gallery" color="#4CAF50" onPress={handlePickImage} />
+                    </View>
+                </View>
+            </View>
+
 
            {/* Displaying the user's email */}
     <View style={styles.userDetailRow}>
@@ -73,7 +108,7 @@ function Profile() {
         <Text style={styles.userEmail}>{auth.currentUser.email}</Text>
     </View>
     <TouchableOpacity onPress={handleEditUser} style={styles.editButton}>
-       <Feather name="edit" size={24} color="black" />
+       {/*<Feather name="edit" size={24} color="black" />*/}
     </TouchableOpacity>
 
            {/* User Information Section */}   
@@ -82,16 +117,16 @@ function Profile() {
 
 
 
-                <Text style={styles.userPassword}>{auth.currentUser.password}</Text>
+                {/*<Text style={styles.userPassword}>{auth.currentUser.password}</Text>
                 <TouchableOpacity onPress={handleChangePassword} style={styles.editButton}>
                     <Feather name="edit" size={24} color="black" />
                 </TouchableOpacity>
 
-                <View style={styles.space} />
+                <View style={styles.space} />*/}
 
                 
             </View>
-            <View style={styles.playerInfo}>
+            <View style={styles.profileInfo}>
     
                 <Text style={styles.title}>Name</Text>
             {isEditing ? <TextInput style={styles.input} value={name} onChangeText={setName} /> : <Text style={styles.detail}>{name}</Text>}
@@ -139,7 +174,7 @@ const styles = StyleSheet.create({
     },
     editButton: {
     },
-    playerInfo: {
+    profileInfo: {
     },
     profileImageSection: {
     },

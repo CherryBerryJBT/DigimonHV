@@ -69,39 +69,42 @@ function Items() {
         setItems(updatedItems);
         saveItems(updatedItems);
     };
+    
 
     return (
-        <View style={styles.screen}>
-          <Text style={styles.title}>Items</Text>
-    
-          {/* List of items */}
-          <FlatList
-            data={items}
-            keyExtractor={item => item.id.toString()}
-            renderItem={({ item }) => (
+      <View style={styles.screen}>
+        <Text style={styles.title}>Items</Text>
+  
+        <FlatList
+          data={items}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({ item }) => {
+            const itemName = item.name || item['item.name']; // handling both "name" and "item.name"
+  
+            return (
               <View style={styles.listItem}>
-                <Text style={styles.task}>{item.name}</Text>
+                <Text style={styles.task}>{itemName}</Text>
                 <TouchableOpacity style={styles.deleteButton} onPress={() => removeItem(item.id)}>
                   <Text style={styles.deleteButtonText}>🌬️</Text>
                 </TouchableOpacity>
               </View>
-            )}
+            );
+          }}
+        />
+          
+        {/* Input field and Add button */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={inputValue}
+            onChangeText={setInputValue}
+            placeholder="What did you find?"
+            maxLength={30}
           />
-    
-          {/* Input field and Add button */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              value={inputValue}
-              onChangeText={setInputValue}
-              placeholder="What did you find?"
-              maxLength={30} 
-            />
-            <Button title="gather" color="#ffa500" onPress={addItem} />
-          </View>
-    
+          <Button title="gather" color="#ffa500" onPress={addItem} />
         </View>
-    ); 
-}
+      </View>
+    );
+  }
 
 export default Items;

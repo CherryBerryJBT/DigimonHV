@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Added useEffect import
+import React, { useState, useEffect } from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import EventModal from './EventModal';

@@ -79,7 +79,7 @@ function Digivice() {
         {/* Button to open the Photos modal */}
         <DraggableButton id="photosButton" onPress={() => setPhotosModalVisible(true)}>
             <TouchableOpacity style={styles.appButtonContainer}>
-                <Text style={styles.appButtonText}>DigiShots</Text>
+                <Text style={styles.appButtonText}>DigiAlbum</Text>
             </TouchableOpacity>
         </DraggableButton>
         {/* Button to open the Made My Day modal */}
@@ -385,7 +385,7 @@ appButtonContainer: {
 },
 appButtonText: {
     color: "white",
-    fontSize: 12, // Adjust the font size here
+    fontSize: 12,
     textAlign: "center"
 },
 

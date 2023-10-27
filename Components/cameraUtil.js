@@ -1,4 +1,3 @@
-// cameraUtil.js
 import * as ImagePicker from 'expo-image-picker';
 
 export const verifyPermissions = async () => {

@@ -14,13 +14,14 @@ const Photos = () => {
     try {
       const imageRefs = [];
       const storage = getStorage();
-      const imagesFolderRef = ref(storage, 'gs://jbtdevelopementprojectsum200.appspot.com'); 
+      const imagesFolderRef = ref(storage, 'gs://jbtdevelopementprojectsum200.appspot.com');
 
       const imageFolderContents = await listAll(imagesFolderRef);
 
       for (const itemRef of imageFolderContents.items) {
         const downloadUrl = await getDownloadURL(itemRef);
-        imageRefs.push({ uri: downloadUrl, id: itemRef.name }); 
+        console.log(downloadUrl); // Log to check the URL
+        imageRefs.push({ uri: downloadUrl, id: itemRef.name });
       }
 
       setPhotos(imageRefs);
@@ -42,9 +43,27 @@ const Photos = () => {
     }
   };
 
+  // Function to handle potential issues with image URLs
+  const handleImageError = (e) => {
+    console.log('Error loading image: ', e);
+  };
+
+   // Additional styles specific to this component
+   const localStyles = StyleSheet.create({
+    image: {
+      width: 100,
+      height: 100, 
+      resizeMode: 'cover',
+    },
+  });
+
   const renderItem = ({ item }) => (
     <View style={styles.listItem}>
-      <Image source={{ uri: item.uri }} style={styles.image} />
+      <Image 
+        source={{ uri: item.uri }} 
+        style={localStyles.image}
+        onError={handleImageError}
+      />
       <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
         <Text style={styles.deleteButtonText}>X</Text>
       </TouchableOpacity>

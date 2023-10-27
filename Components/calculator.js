@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: '25%', // for four columns
-    minHeight: '20%', // for five rows
+    minWidth: '25%',
+    minHeight: '20%',
     backgroundColor: '#e0e0e0',
   },
   title: {

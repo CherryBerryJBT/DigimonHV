@@ -54,8 +54,7 @@ const Login = () => {
     
             console.log("Verification email sent.");
             alert("Registration successful! Please verify your email address.");
-    
-            // Optionally, you can sign out the user until they verify their email
+            
             // await signOut(auth);
         } catch (error) {
             console.log(error);
@@ -70,14 +69,12 @@ const Login = () => {
             'keyboardDidShow',
             () => {
                 console.log('Keyboard is shown');
-                // Here you can add additional logic when the keyboard is shown
             }
         );
         const keyboardDidHideListener = Keyboard.addListener(
             'keyboardDidHide',
             () => {
                 console.log('Keyboard is hidden');
-                // Here you can add additional logic when the keyboard is hidden
             }
         );
 
@@ -95,7 +92,7 @@ const Login = () => {
             <ImageBackground 
                 source={require("../assets/DigimonLandscape.png")}
                 style={styles.backgroundImage}
-                resizeMode="cover" // This ensures your image covers the whole area
+                resizeMode="cover"
             >
             <View style={styles.headerContainer}>
                 {/* Place Logo here */}
@@ -108,7 +105,7 @@ const Login = () => {
             <View style={styles.inputContainer}>
                 <TextInput
                     placeholder="Email"
-                    placeholderTextColor="#adb4bc"  // making placeholder text lighter
+                    placeholderTextColor="#adb4bc"
                     value={email}
                     onChangeText={(text) => setEmail(text)}
                     style={styles.input}
@@ -118,7 +115,7 @@ const Login = () => {
                 />
                 <TextInput
                     placeholder="Password"
-                    placeholderTextColor="#adb4bc"  // making placeholder text lighter
+                    placeholderTextColor="#adb4bc"
                     value={password}
                     onChangeText={(text) => setPassword(text)}
                     style={styles.input}
@@ -126,7 +123,7 @@ const Login = () => {
                 />
             </View>
             {loading ? (
-                <ActivityIndicator size="large" color="#5A67F2" />  // using a custom color for the loader
+                <ActivityIndicator size="large" color="#5A67F2" /> 
             ) : (
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={signIn} style={[styles.button, styles.buttonOutline]}>
@@ -149,68 +146,68 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     backgroundImage: {
-        flex: 1, // This will make sure the image covers the whole screen area
-        width: '100%', // Full width
-        height: '100%', // Full height
-        justifyContent: "center", // Align children components to the center
+        flex: 1,
+        width: '100%', 
+        height: '100%', 
+        justifyContent: "center", 
         alignItems: "center",
     },
     headerContainer: {
         alignItems: 'center',
-        marginTop: 60,  // space for the header
-        marginBottom: 30,  // space between header and inputs
+        marginTop: 60,  
+        marginBottom: 30,  
     },
     logo: {
-        width: 350,  // or your desired logo size
-        height: 100,  // or your desired logo size
+        width: 350,  
+        height: 100,  
         marginTop: -160,
     },
     headerText: {
         fontSize: 26,
         fontWeight: '700',
-        color: '#333',  // dark text color for the header
+        color: '#333',  
         marginTop: -10,
     },
     inputContainer: {
-        paddingHorizontal: 35,  // more horizontal padding for the inputs
+        paddingHorizontal: 35,
     },
     input: {
-        height: 50,  // taller inputs
-        backgroundColor: '#fff',  // white background for the inputs
-        marginBottom: 20,  // space between inputs
-        paddingHorizontal: 60,  // inner horizontal padding
-        borderRadius: 25,  // rounded borders
-        borderWidth: 1,  // define border
-        borderColor: '#ddd',  // light border color
-        fontSize: 16,  // slightly larger font size
+        height: 50,  
+        backgroundColor: '#fff',  
+        marginBottom: 20,  
+        paddingHorizontal: 60,  
+        borderRadius: 25,  
+        borderWidth: 1,  
+        borderColor: '#ddd',  
+        fontSize: 16,  
     },
     buttonContainer: {
-        width: '60%', // makes the container take the full width available
-        paddingHorizontal: 15, // you might want to keep some padding around the buttons
-        alignItems: 'center', // to align the buttons to the center
+        width: '60%', 
+        paddingHorizontal: 15, 
+        alignItems: 'center', 
     },
     button: {
-        width: '90%', // makes the button take up 90% of the container width, you can adjust as you prefer
-        backgroundColor: "#2980b9", // your choice of color
-        paddingVertical: 15, // padding inside the button, increases height
-        paddingHorizontal: 10, // padding on the sides of the text inside, increases width
-        borderRadius: 5, // if you want rounded corners
-        marginBottom: 10, // space between this button and the next item (if you have one below)
-        alignItems: 'center', // makes sure the text inside the button is centered
+        width: '90%', 
+        backgroundColor: "#2980b9", 
+        paddingVertical: 15, 
+        paddingHorizontal: 10, 
+        borderRadius: 5,
+        marginBottom: 10, 
+        alignItems: 'center', 
     },
     buttonText: {
-        color: "#FFF", // text color, usually contrasting the button color
-        fontWeight: "700", // makes text bold
-        fontSize: 16, // or another size to make the text bigger or smaller
-        textAlign: 'center', // centers the text, useful if the button is wider than the text
+        color: "#FFF", 
+        fontWeight: "700", 
+        fontSize: 16, 
+        textAlign: 'center', 
     },
     buttonOutline: {
-        backgroundColor: 'transparent',  // no background color
-        borderColor: '#5A67F2',  // border matching the other button
-        borderWidth: 1,  // thicker border
+        backgroundColor: 'transparent',  
+        borderColor: '#5A67F2',  
+        borderWidth: 1,  
     },
     buttonOutlineText: {
-        color: '#5A67F2',  // text color matching the border
+        color: '#5A67F2', 
     },
 });
 

@@ -4,7 +4,7 @@ import { FIREBASE_AUTH } from "./firebase";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 
-const Settings = ({ onClose }) => { // Corrected here, it should be an object
+const Settings = ({ onClose }) => { 
     return (
         <View style={styles.screen}>
             <Text style={styles.title}>Settings</Text>
